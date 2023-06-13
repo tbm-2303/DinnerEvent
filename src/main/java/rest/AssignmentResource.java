@@ -4,15 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.AssignmentDTO;
 import dtos.EventDTO;
+import dtos.MemberDTO;
 import facades.AssignmentFacade;
 import facades.EventFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
 
@@ -63,6 +61,25 @@ public class AssignmentResource {
     @Path("/getById/{id}")
     public Response getById(@PathParam("id") Long id) {
         AssignmentDTO assignment = FACADE.getAssignmentById(id);
+        return Response.ok().entity(GSON.toJson(assignment)).build();
+    }
+
+    //get members from assignment
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getMembers/{id}")
+    public Response getMembers(@PathParam("id") Long assignmentId) {
+        List<MemberDTO> members = FACADE.getMembersFromAssignment(assignmentId);
+        return Response.ok().entity(GSON.toJson(members)).build();
+    }
+
+
+    //remove member from assignment
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/removeMember/{aId}/{mId}")
+    public Response removeMember(@PathParam("aId") Long assignmentId, @PathParam("mId") Long memberId) {
+        AssignmentDTO assignment = FACADE.removeMemberFromAssignment(assignmentId, memberId);
         return Response.ok().entity(GSON.toJson(assignment)).build();
     }
 }

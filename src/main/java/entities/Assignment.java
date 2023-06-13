@@ -46,9 +46,13 @@ public class Assignment {
         member.getAssignments().add(this);
     }
 
+
     public void removeMember(Member member){
         this.members.remove(member);
-        member.getAssignments().remove(this);
+        if (member.getAssignments().contains(this)){
+            member.getAssignments().remove(this);
+        }
+
     }
 
     public void removeEvent(Event event) {

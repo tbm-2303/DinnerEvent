@@ -37,6 +37,15 @@ public class EventResource {
         return "{\"msg\":\"Hello event\"}";
     }
 
+    //get by id
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Response getEventById(@PathParam("id") Long eventID) {
+        EventDTO eventDTO = FACADE.getEventById(eventID);
+        return Response.ok().entity(GSON.toJson(eventDTO)).build();
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/all")
@@ -49,17 +58,29 @@ public class EventResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/create")
-    public String createNewEvent(String event){
+    public Response createNewEvent(String event){
         EventDTO dinnerEventDTO = GSON.fromJson(event, EventDTO.class);
         EventDTO created = FACADE.createNewEvent(dinnerEventDTO);
-        return GSON.toJson(created);
+        return Response.ok().entity(GSON.toJson(created)).build();
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/delete/{id}")
-    public String deleteEvent(@PathParam("id") Long eventID){
+    public Response deleteEvent(@PathParam("id") Long eventID){
         EventDTO eventDTO = FACADE.deleteEvent(eventID);
-        return GSON.toJson(eventDTO);
+        return Response.ok().entity(GSON.toJson(eventDTO)).build();
+    }
+
+
+    //update event info
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/update")
+    public Response updateEvent(String event){
+        EventDTO eventDTO = GSON.fromJson(event, EventDTO.class);
+        EventDTO updated = FACADE.updateEvent(eventDTO);
+        return Response.ok().entity(GSON.toJson(updated)).build();
     }
 }

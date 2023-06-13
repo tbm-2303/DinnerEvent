@@ -38,6 +38,7 @@ public class Member {
 
 
 
+
     public Member() {
     }
 
@@ -49,6 +50,16 @@ public class Member {
         this.account = account;
     }
 
+
+    public void addUser(User u) {
+        this.user = u;
+        u.setMember(this);
+    }
+
+    public void removeUser(User u) {
+        this.user = null;
+        u.setMember(null);
+    }
 
 
     public Long getId() {
@@ -99,4 +110,6 @@ public class Member {
     public void setAssignments(List<Assignment> assignments) {
         this.assignments = assignments;
     }
+
+
 }

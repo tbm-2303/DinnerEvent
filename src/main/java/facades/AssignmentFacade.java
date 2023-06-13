@@ -2,6 +2,8 @@ package facades;
 
 import dtos.AssignmentDTO;
 import dtos.EventDTO;
+import dtos.MemberDTO;
+import entities.Assignment;
 import entities.Member;
 import entities.User;
 import errorhandling.NotFoundException;
@@ -76,4 +78,32 @@ public class AssignmentFacade {
             em.close();
         }
     }
+
+
+    public List<MemberDTO> getMembersFromAssignment(Long assignmentId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            List<MemberDTO> members = em.createQuery("SELECT new dtos.MemberDTO(m) FROM Member m JOIN m.assignments a WHERE a.id = :id", MemberDTO.class).setParameter("id", assignmentId).getResultList();
+            return members;
+        } finally {
+            em.close();
+        }
+    }
+
+    public AssignmentDTO removeMemberFromAssignment(Long assignmentId, Long memberId) {
+        EntityManager em = emf.createEntityManager();
+        Assignment assignment = em.find(Assignment.class, assignmentId);
+        Member member = em.find(Member.class, memberId);
+        assignment.removeMember(member);
+        try {
+            em.getTransaction().begin();
+            em.merge(assignment);
+            em.getTransaction().commit();
+            return new AssignmentDTO(assignment);
+        } finally {
+            em.close();
+        }
+    }
+
+
 }

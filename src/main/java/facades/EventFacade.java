@@ -81,4 +81,32 @@ public class EventFacade {
             em.getTransaction().commit();
         }
     }
+// US-6
+    public EventDTO updateEvent(EventDTO eventDTO) {
+        EntityManager em = emf.createEntityManager();
+        Event event = em.find(Event.class, eventDTO.getId());
+        event.setTime(eventDTO.getTime());
+        event.setLocation(eventDTO.getLocation());
+        event.setDish(eventDTO.getDish());
+        event.setPrice(eventDTO.getPrice());
+        try {
+            em.getTransaction().begin();
+            em.merge(event);
+            em.getTransaction().commit();
+            return new EventDTO(event);
+        } finally {
+            em.close();
+        }
+    }
+
+    public EventDTO getEventById(Long eventID) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Event event = em.find(Event.class, eventID);
+            return new EventDTO(event);
+        } finally {
+            em.close();
+        }
+        
+    }
 }
