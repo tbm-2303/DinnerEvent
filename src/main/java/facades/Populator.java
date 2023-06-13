@@ -6,17 +6,11 @@
 package facades;
 
 
-import dtos.HobbyDTO;
-import dtos.PersonDTO;
-import entities.Hobby;
-import entities.Person;
+
 
 import javax.persistence.EntityManagerFactory;
 
-import errorhandling.NotFoundException;
 import utils.EMF_Creator;
-
-import java.io.IOException;
 
 /**
  * @author tha
@@ -24,17 +18,12 @@ import java.io.IOException;
 public class Populator {
     public static void populate() {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        PersonFacade fe = PersonFacade.getPersonFacade(emf);
-        PersonDTO p1 = fe.create(new PersonDTO(new Person("Jens", 45)));
-        HobbyDTO h1 = fe.createHobby(new HobbyDTO(new Hobby("Fodbold", "Fodbold er en boldspil")));
-        fe.addHobby(p1.getId(), h1.getId());
+
 
     }
 
     public static void removeHobbyFromPersonTest() {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        PersonFacade fe = PersonFacade.getPersonFacade(emf);
-        fe.removeHobbyFromPerson(1L, 1L);
 
 
     }

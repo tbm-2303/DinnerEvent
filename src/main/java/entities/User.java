@@ -32,8 +32,7 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-  private List<Quiz> quizzes;
+
 
 
   public List<String> getRolesAsStrings() {
@@ -71,8 +70,7 @@ public class User implements Serializable {
   }
 
 
-  public List<Quiz> getQuizzes() { return quizzes; }
-  public void setQuizzes(List<Quiz> quizzes) { this.quizzes = quizzes; }
+
   public String getUserName() { return userName; }
   public void setUserName(String userName) { this.userName = userName; }
   public String getUserPass() { return this.userPass; }
