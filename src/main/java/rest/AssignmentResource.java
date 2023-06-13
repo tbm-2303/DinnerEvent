@@ -82,4 +82,13 @@ public class AssignmentResource {
         AssignmentDTO assignment = FACADE.removeMemberFromAssignment(assignmentId, memberId);
         return Response.ok().entity(GSON.toJson(assignment)).build();
     }
+
+    //setup deployed database with entities
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/setup")
+    public Response setup() {
+        FACADE.setup();
+        return Response.ok().entity(GSON.toJson("Database setup")).build();
+    }
 }

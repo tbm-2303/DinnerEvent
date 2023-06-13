@@ -30,13 +30,13 @@ public class MemberResource {
         return "{\"msg\":\"Hello member\"}";
     }
 
-  //get account/balance from member
+  //member by user name
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/getBalance/{username}")
+    @Path("/get/{username}")
     public Response getBalance(@PathParam("username") String username) {
-        int balance = FACADE.getBalanceFromMemberByUsername(username);
-        return Response.ok().entity(GSON.toJson(balance)).build();
+        MemberDTO member = FACADE.getMemberByUsername(username);
+        return Response.ok().entity(GSON.toJson(member)).build();
     }
 
 }

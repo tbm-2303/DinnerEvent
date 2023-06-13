@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "assignment")
+@NamedQuery(name = "Assignment.deleteAllRows", query = "DELETE from Assignment")
 @Entity
 public class Assignment {
 

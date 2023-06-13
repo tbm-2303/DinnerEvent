@@ -34,13 +34,13 @@ public class MemberFacade {
 
 
 
-
-    public int getBalanceFromMemberByUsername(String username) {
+//get member by username
+    public MemberDTO getMemberByUsername(String username) {
         EntityManager em = emf.createEntityManager();
         try {
             User u = em.find(User.class, username);
             Member m = em.find(Member.class, u.getMember().getId());
-            return m.getAccount();
+            return new MemberDTO(m);
         } finally {
             em.close();
         }

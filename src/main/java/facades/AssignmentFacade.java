@@ -106,4 +106,8 @@ public class AssignmentFacade {
     }
 
 
+    public void setup() {
+        EntityManager em = emf.createEntityManager();
+
+    }
 }
