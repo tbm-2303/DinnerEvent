@@ -32,7 +32,8 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
 
-
+  @OneToOne()
+  private Member member;
 
 
   public List<String> getRolesAsStrings() {
@@ -70,7 +71,12 @@ public class User implements Serializable {
   }
 
 
-
+  public Member getMember() {
+    return member;
+  }
+  public void setMember(Member member) {
+    this.member = member;
+  }
   public String getUserName() { return userName; }
   public void setUserName(String userName) { this.userName = userName; }
   public String getUserPass() { return this.userPass; }

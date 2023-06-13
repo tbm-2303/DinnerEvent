@@ -8,6 +8,9 @@
         <class>entities.Flag</class>
         <class>entities.Quiz</class>
         <class>entities.Question</class>
+        <class>entities.Member</class>
+        <class>entities.Assignment</class>
+        <class>entities.Event</class>
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <!--    <class>entities.RenameMe</class>-->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
