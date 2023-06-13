@@ -35,9 +35,9 @@ public class AssignmentResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/all")
-    public Response getAllEvents() {
-        List<EventDTO> events = FACADE.getAllAssignments();
-        return Response.ok().entity(GSON.toJson(events)).build();
+    public Response getAllAssignments() {
+        List<AssignmentDTO> assignments = FACADE.getAllAssignments();
+        return Response.ok().entity(GSON.toJson(assignments)).build();
     }
 
     @GET
@@ -46,5 +46,23 @@ public class AssignmentResource {
     public Response getAllByUsername(@PathParam("username") String username) {
         List<AssignmentDTO> assignments = FACADE.getAssignmentsByUsername(username);
         return Response.ok().entity(GSON.toJson(assignments)).build();
+    }
+
+    //get all assignments by event id
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllByEventId/{id}")
+    public Response getAllByEventId(@PathParam("id") Long eventId) {
+        List<AssignmentDTO> assignments = FACADE.getAssignmentsByEventId(eventId);
+        return Response.ok().entity(GSON.toJson(assignments)).build();
+    }
+
+    //get asssignment by id
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getById/{id}")
+    public Response getById(@PathParam("id") Long id) {
+        AssignmentDTO assignment = FACADE.getAssignmentById(id);
+        return Response.ok().entity(GSON.toJson(assignment)).build();
     }
 }

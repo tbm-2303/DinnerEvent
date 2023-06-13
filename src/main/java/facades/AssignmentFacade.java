@@ -47,11 +47,31 @@ public class AssignmentFacade {
     }
 
 
-    public List<EventDTO> getAllAssignments() {
+    public List<AssignmentDTO> getAllAssignments() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<EventDTO> assignments = em.createQuery("SELECT new dtos.EventDTO(e) FROM Event e", EventDTO.class).getResultList();
+            List<AssignmentDTO> allAssignments = em.createQuery("SELECT new dtos.AssignmentDTO(a) FROM Assignment a", AssignmentDTO.class).getResultList();
+            return allAssignments;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<AssignmentDTO> getAssignmentsByEventId(Long eventId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            List<AssignmentDTO> assignments = em.createQuery("SELECT new dtos.AssignmentDTO(a) FROM Assignment a WHERE a.event.id = :id", AssignmentDTO.class).setParameter("id", eventId).getResultList();
             return assignments;
+        } finally {
+            em.close();
+        }
+    }
+
+    public AssignmentDTO getAssignmentById(Long id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            AssignmentDTO assignment = em.createQuery("SELECT new dtos.AssignmentDTO(a) FROM Assignment a WHERE a.id = :id", AssignmentDTO.class).setParameter("id", id).getSingleResult();
+            return assignment;
         } finally {
             em.close();
         }

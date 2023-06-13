@@ -44,7 +44,7 @@ public class EventResource {
         List<EventDTO> events = FACADE.getAllEvents();
         return Response.ok().entity(GSON.toJson(events)).build();
     }
-    //create new event
+    //create new event6
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -53,5 +53,13 @@ public class EventResource {
         EventDTO dinnerEventDTO = GSON.fromJson(event, EventDTO.class);
         EventDTO created = FACADE.createNewEvent(dinnerEventDTO);
         return GSON.toJson(created);
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/delete/{id}")
+    public String deleteEvent(@PathParam("id") Long eventID){
+        EventDTO eventDTO = FACADE.deleteEvent(eventID);
+        return GSON.toJson(eventDTO);
     }
 }

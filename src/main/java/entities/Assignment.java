@@ -51,6 +51,10 @@ public class Assignment {
         member.getAssignments().remove(this);
     }
 
+    public void removeEvent(Event event) {
+        this.event = null;
+        event.getAssignments().remove(this);
+    }
 
     public Long getId() {
         return id;
@@ -88,4 +92,6 @@ public class Assignment {
     public void setEvent(Event event) {
         this.event = event;
     }
+
+
 }

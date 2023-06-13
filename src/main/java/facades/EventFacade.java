@@ -1,7 +1,9 @@
 package facades;
 
 import dtos.EventDTO;
+import entities.Assignment;
 import entities.Event;
+import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -49,6 +51,34 @@ public class EventFacade {
             return new EventDTO(event);
         } finally {
             em.close();
+        }
+    }
+
+
+
+    //delete event entity that has relationship with assignment entity.
+
+    public EventDTO deleteEvent(Long eventID) {
+        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+        EntityManager em = emf.createEntityManager();
+        Event e1 = em.find(Event.class, eventID);
+        helper(e1.getAssignments(), e1.getId());
+
+        em.getTransaction().begin();
+        em.remove(e1);
+        em.getTransaction().commit();
+        return new EventDTO(e1);
+    }
+
+    public static void helper(List<Assignment> assignments, Long id) {
+        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+        EntityManager em = emf.createEntityManager();
+        Event e1 = em.find(Event.class, id);
+        for (Assignment a : assignments) {
+            a.removeEvent(e1);
+            em.getTransaction().begin();
+            em.merge(a);
+            em.getTransaction().commit();
         }
     }
 }
