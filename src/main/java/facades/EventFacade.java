@@ -63,7 +63,6 @@ public class EventFacade {
         EntityManager em = emf.createEntityManager();
         Event e1 = em.find(Event.class, eventID);
         helper(e1.getAssignments(), e1.getId());
-
         em.getTransaction().begin();
         em.remove(e1);
         em.getTransaction().commit();

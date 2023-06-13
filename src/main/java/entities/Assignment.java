@@ -56,6 +56,11 @@ public class Assignment {
 
     }
 
+    public void addEvent(Event event) {
+        this.event = event;
+        event.getAssignments().add(this);
+    }
+
     public void removeEvent(Event event) {
         this.event = null;
         event.getAssignments().remove(this);
