@@ -40,7 +40,7 @@ public class EventResource {
     //get by id
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
+    @Path("/getById/{id}")
     public Response getEventById(@PathParam("id") Long eventID) {
         EventDTO eventDTO = FACADE.getEventById(eventID);
         return Response.ok().entity(GSON.toJson(eventDTO)).build();

@@ -107,6 +107,6 @@ public class EventFacade {
         } finally {
             em.close();
         }
-        
+
     }
 }
