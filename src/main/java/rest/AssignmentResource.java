@@ -26,12 +26,6 @@ public class AssignmentResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
-    @Context
-    private UriInfo context;
-
-    @Context
-    SecurityContext securityContext;
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
@@ -42,7 +36,7 @@ public class AssignmentResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/all")
     public Response getAllEvents() {
-        List<EventDTO> events = FACADE.getAllEvents();
+        List<EventDTO> events = FACADE.getAllAssignments();
         return Response.ok().entity(GSON.toJson(events)).build();
     }
 
@@ -50,7 +44,7 @@ public class AssignmentResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getAllByUsername/{username}")
     public Response getAllByUsername(@PathParam("username") String username) {
-        List<AssignmentDTO> events = FACADE.getAssignmentsByUsername(username);
-        return Response.ok().entity(GSON.toJson(events)).build();
+        List<AssignmentDTO> assignments = FACADE.getAssignmentsByUsername(username);
+        return Response.ok().entity(GSON.toJson(assignments)).build();
     }
 }

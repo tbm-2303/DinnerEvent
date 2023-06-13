@@ -11,9 +11,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class EventResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
-        return "{\"msg\":\"Hello anonymous\"}";
+        return "{\"msg\":\"Hello event\"}";
     }
 
     @GET
@@ -45,6 +43,15 @@ public class EventResource {
     public Response getAllEvents() {
         List<EventDTO> events = FACADE.getAllEvents();
         return Response.ok().entity(GSON.toJson(events)).build();
-
+    }
+    //create new event
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/create")
+    public String createNewEvent(String event){
+        EventDTO dinnerEventDTO = GSON.fromJson(event, EventDTO.class);
+        EventDTO created = FACADE.createNewEvent(dinnerEventDTO);
+        return GSON.toJson(created);
     }
 }

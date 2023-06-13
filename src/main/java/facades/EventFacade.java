@@ -1,6 +1,7 @@
 package facades;
 
 import dtos.EventDTO;
+import entities.Event;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,6 +33,20 @@ public class EventFacade {
         try {
             List<EventDTO> events = em.createQuery("SELECT new dtos.EventDTO(e) FROM Event e", EventDTO.class).getResultList();
             return events;
+        } finally {
+            em.close();
+        }
+    }
+
+    public EventDTO createNewEvent(EventDTO eventDTO) {
+        EntityManager em = emf.createEntityManager();
+        Event event = new Event(eventDTO.getTime(),eventDTO.getLocation(),eventDTO.getDish(),eventDTO.getPrice());
+
+        try {
+            em.getTransaction().begin();
+            em.persist(event);
+            em.getTransaction().commit();
+            return new EventDTO(event);
         } finally {
             em.close();
         }
